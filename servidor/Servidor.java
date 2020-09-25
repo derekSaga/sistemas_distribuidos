@@ -1,6 +1,7 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.io.PrintStream;
 
 public class Servidor {
     public static void main(String[] args) {
@@ -8,6 +9,7 @@ public class Servidor {
         ServerSocket sktServer = null;
         Socket sktCliente = null;
         Scanner entrada;
+        PrintStream saida = null;
 
         // bind - solicitar uma porta ao SO
         try {
@@ -23,6 +25,10 @@ public class Servidor {
             sktCliente = sktServer.accept();
             entrada = new Scanner(sktCliente.getInputStream());
             System.out.println("Conectado com " + sktCliente.getInetAddress().getHostAddress());
+            
+            
+            saida = new PrintStream(sktCliente.getOutputStream());
+            saida.println("Mesangem recebida trouxa");
         } catch (Exception e) {
             System.out.println("Erro no processo de conexão.");
             return;
