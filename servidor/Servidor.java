@@ -10,6 +10,7 @@ public class Servidor {
         Socket sktCliente = null;
         Scanner entrada;
         PrintStream saida = null;
+        String msg = null;
 
         // bind - solicitar uma porta ao SO
         try {
@@ -18,35 +19,34 @@ public class Servidor {
             System.out.println("Porta " + PORTA + " em uso.");
             return;
         }
-
-        // aguarda um pedido de conexão
-        try {
-            System.out.println("Aguardando conexão.");
-            sktCliente = sktServer.accept();
-            entrada = new Scanner(sktCliente.getInputStream());
-            System.out.println("Conectado com " + sktCliente.getInetAddress().getHostAddress());
-            
-            saida = new PrintStream(sktCliente.getOutputStream());
-
-        } catch (Exception e) {
-            System.out.println("Erro no processo de conexão.");
-            return;
-        }
-
-        // etapa de comunicação
-
-        try {
-            String msg = entrada.nextLine();
-            while(!msg.equals("exit")){
-                System.out.println("Mensagem Recebida: " + msg);
-                saida.println("Mensagem recebida");
-                msg = entrada.nextLine();
+        do{
+            // aguarda um pedido de conexão
+            try {
+                System.out.println("Aguardando conexão.");
+                sktCliente = sktServer.accept();
+                entrada = new Scanner(sktCliente.getInputStream());
+                System.out.println("Conectado com " + sktCliente.getInetAddress().getHostAddress());
+                
+                saida = new PrintStream(sktCliente.getOutputStream());
+    
+            } catch (Exception e) {
+                System.out.println("Erro no processo de conexão.");
+                return;
             }
-            
-            
-        } catch (Exception e) {
-            System.out.println("Erro durante a comunicação com o cliente.");
-        }
+    
+            // etapa de comunicação
+    
+            try {
+                msg = entrada.nextLine();
+                while(!msg.equals("exit") && !msg.equals("fechar")){
+                    System.out.println("Mensagem Recebida: " + msg);
+                    saida.println("Mensagem recebida");
+                    msg = entrada.nextLine();
+                }
+            } catch (Exception e) {
+                System.out.println("Erro durante a comunicação com o cliente.");
+            }
+        }while(!msg.equals("fechar"));
         // encerra a conexão
         try {
             sktCliente.close();
