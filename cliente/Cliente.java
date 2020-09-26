@@ -7,7 +7,8 @@ public class Cliente {
         final int PORTA = 9876;
         Socket sktCliente = null;
         PrintStream saida = null;
-        Scanner entrada;
+        Scanner saida_input = null;
+        Scanner entrada = null;
 
         // solicita uma conexão com o servidor
         try {
@@ -15,15 +16,24 @@ public class Cliente {
             System.out.println("Conexão feita.");
 
             saida = new PrintStream(sktCliente.getOutputStream());
+            entrada = new Scanner(sktCliente.getInputStream());
         } catch (final Exception e) {
             System.out.println("Erro ao conectar ao servidor.");
         }
 
         // etapa de comunicação
         try{
-            saida.println("cheguei porra");
-            entrada = new Scanner(sktCliente.getInputStream());
-            System.out.println("Mensagem: "+entrada.nextLine());
+            saida_input = new Scanner(System.in);
+            String msg = saida_input.nextLine();
+            
+            while(!msg.equals("exit")){
+                saida.println(msg);
+
+                System.out.println("Mensagem: "+entrada.nextLine());
+                
+                msg = saida_input.nextLine();
+            }
+            saida.println(msg);
         }catch (final Exception e){
             System.out.println("Erro na etapa de comunicação.");
         }
