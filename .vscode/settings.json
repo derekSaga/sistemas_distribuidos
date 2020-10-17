@@ -1,3 +1,31 @@
 {
-    "compile-hero.disable-compile-files-on-did-save-code": false
+    "compile-hero.disable-compile-files-on-did-save-code": false,
+    "cSpell.words": [
+        "Aguardando",
+        "Atende",
+        "Comunicacao",
+        "Conectar",
+        "Conex",
+        "Conexão",
+        "Entrada",
+        "Erro",
+        "Escuta",
+        "Historico",
+        "Mensagem",
+        "PORTA",
+        "Paduan",
+        "Servidor",
+        "Usuario",
+        "atendimentos",
+        "cliente",
+        "comunica",
+        "criar",
+        "defaultstate",
+        "enviar",
+        "envio",
+        "o",
+        "objetos",
+        "receber",
+        "sckt"
+    ]
 }
